@@ -1,0 +1,19 @@
+{
+  "name": "qa-serverest-tests",
+  "version": "1.0.0",
+  "description": "Testes automatizados de API e E2E da aplicação ServeRest com Cypress e Postman",
+  "scripts": {
+    "cy:open": "cypress open",
+    "test": "cypress run",
+    "test:api": "cypress run --spec 'cypress/e2e/api/**/*.cy.js'",
+    "test:ui": "cypress run --spec 'cypress/e2e/ui/**/*.cy.js'",
+    "test:postman": "newman run postman/ServeRest.postman_collection.json -e postman/ServeRest.postman_environment.json"
+  },
+  "keywords": ["qa", "cypress", "postman", "testes-automatizados", "serverest"],
+  "author": "Igor Cavalcante",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^14.5.0",
+    "newman": "^6.2.1"
+  }
+}
