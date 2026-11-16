@@ -1,0 +1,43 @@
+name: Testes automatizados
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:        # permite rodar manualmente pela aba Actions
+  schedule:
+    - cron: "0 12 * * 1"    # toda segunda-feira (monitora o ambiente)
+
+jobs:
+  postman:
+    name: API (Postman/Newman)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-save newman
+      - run: npx newman run postman/ServeRest.postman_collection.json -e postman/ServeRest.postman_environment.json
+
+  cypress:
+    name: API + E2E (Cypress)
+    runs-on: ubuntu-latest
+    needs: postman
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Instalar dependências
+        run: npm install
+      - name: Rodar Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+      - name: Prints das falhas
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: cypress/screenshots
