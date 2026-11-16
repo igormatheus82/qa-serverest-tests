@@ -148,7 +148,8 @@ Funcionalidade: Login e cadastro pelo navegador
   # CT-UI-04 (M)
   Cenário: Login com campos vazios
     Quando clico em "Entrar" sem preencher os campos
-    Então o navegador deve impedir o envio do formulário
+    Então devo ver "Email é obrigatório" e "Password é obrigatório"
+    E devo permanecer na tela de login
 
   # CT-UI-05 (A)
   Cenário: Cadastro de administrador
