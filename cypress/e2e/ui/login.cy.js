@@ -33,13 +33,12 @@ describe('UI | Login', () => {
     cy.url().should('include', '/login')
   })
 
-  it('CT-UI-04 | Deve impedir envio com campos vazios (validação HTML5)', () => {
+  it('CT-UI-04 | Deve exibir mensagens de campos obrigatórios ao enviar vazio', () => {
     cy.visit('/login')
     cy.get('[data-testid="entrar"]').click()
 
-    cy.get('[data-testid="email"]').then(($input) => {
-      expect($input[0].validity.valueMissing).to.eq(true)
-    })
+    cy.contains('Email é obrigatório').should('be.visible')
+    cy.contains('Password é obrigatório').should('be.visible')
     cy.url().should('include', '/login')
   })
 })
